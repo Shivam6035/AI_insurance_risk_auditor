@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Insurance Policy Auditor</title>
+    <!-- Modern Sans-Serif Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS for rapid styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom CSS (if needed later) -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Header Section -->
+    <header class="bg-white border-b border-gray-200 shadow-sm py-4">
+        <div class="max-w-5xl mx-auto px-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Shield Icon -->
+                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                <h1 class="text-xl font-bold text-gray-900 tracking-tight">AI Policy Auditor</h1>
+            </div>
+            <div class="text-sm text-gray-500 font-medium hidden sm:block">Powered by LangGraph & Gemini</div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-grow max-w-5xl mx-auto w-full px-4 py-8">
+        
+        <!-- STATE 1: Input Area (Visible by default) -->
+        <section id="input-section" class="max-w-2xl mx-auto mt-10 transition-opacity duration-300">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Audit Health Insurance Policies</h2>
+                <p class="text-gray-600 leading-relaxed">Enter a policy name and provider. Our AI agent will scrape official guidelines in real-time, grade the clauses, and calculate a Policy Health Score.</p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <label for="policy-query" class="block text-sm font-semibold text-gray-700 mb-2">What policy should we audit?</label>
+                <textarea id="policy-query" rows="4" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all resize-none shadow-inner" placeholder="e.g., Audit my HDFC ERGO Optima Secure policy with a 10L cover. Look specifically at room rent and PED limits."></textarea>
+                
+                <!-- Quick Prompts to save the user from typing -->
+                <div class="mt-4 flex flex-wrap gap-2 mb-6">
+                    <span class="text-xs text-gray-400 uppercase font-bold tracking-wider mr-2 self-center">Try:</span>
+                    <button class="quick-prompt text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 py-1.5 px-3 rounded-full transition-colors border border-blue-200">HDFC ERGO Optima Secure</button>
+                    <button class="quick-prompt text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 py-1.5 px-3 rounded-full transition-colors border border-blue-200">Star Health Comprehensive</button>
+                </div>
+                
+                <button id="audit-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-md hover:shadow-lg">
+                    <!-- Sparkle Icon -->
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                    Initiate AI Audit
+                </button>
+
+                <!-- Error Message Placeholder -->
+                <p id="error-message" class="text-red-500 text-sm mt-4 text-center hidden font-medium"></p>
+            </div>
+        </section>
+
+        <!-- STATE 2: Loading State (Hidden by default) -->
+        <section id="loading-section" class="hidden max-w-2xl mx-auto mt-24 text-center">
+            <div class="relative w-20 h-20 mx-auto mb-6">
+                <!-- Outer spinning ring -->
+                <div class="absolute inset-0 rounded-full border-4 border-gray-100"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
+                <!-- Inner icon -->
+                <svg class="absolute inset-0 w-8 h-8 m-auto text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Agent is Auditing...</h3>
+            <p id="loading-text" class="text-gray-500 animate-pulse font-medium">Scraping official web guidelines for clauses and limits. This takes about 10-15 seconds.</p>
+        </section>
+
+        <!-- STATE 3: Results Dashboard (Hidden by default) -->
+        <section id="results-section" class="hidden w-full mt-4">
+            <div class="flex items-center justify-between mb-8 border-b border-gray-200 pb-4">
+                <h2 class="text-2xl font-bold text-gray-900">Audit Results</h2>
+                <button id="reset-btn" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors flex items-center gap-1 bg-blue-50 py-2 px-4 rounded-lg">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    Audit Another Policy
+                </button>
+            </div>
+
+            <!-- Top Cards: Policy Info & Score -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Info Card -->
+                <div class="md:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-8 flex flex-col justify-center relative overflow-hidden">
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1" id="res-provider">Provider Name</div>
+                    <div class="text-3xl font-extrabold text-gray-900 mb-6" id="res-policy-name">Policy Name</div>
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-lg">
+                        <p class="text-gray-800 font-medium text-sm leading-relaxed" id="res-verdict">Executive summary verdict will appear here.</p>
+                    </div>
+                </div>
+
+                <!-- Score Card -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 flex flex-col items-center justify-center text-center">
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Health Score</div>
+                    <div id="score-ring" class="relative w-36 h-36 flex items-center justify-center rounded-full border-[10px] border-blue-500 shadow-inner mb-3 transition-colors duration-500">
+                        <!-- Score gets injected here -->
+                        <span class="text-5xl font-extrabold text-gray-900 tracking-tighter" id="res-score">0</span>
+                    </div>
+                    <div class="text-xs font-semibold text-gray-400 bg-gray-100 py-1 px-3 rounded-full">Out of 900</div>
+                </div>
+            </div>
+
+            <!-- Deductions Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-5 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+                    <h3 class="text-lg font-bold text-gray-900">Clause Penalties & Deductions</h3>
+                    <span class="text-xs font-semibold text-gray-500 bg-gray-200 py-1 px-2 rounded" id="deductions-count">0 found</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-white text-gray-400 text-xs uppercase tracking-wider border-b border-gray-200">
+                                <th class="px-6 py-4 font-semibold w-1/4">Category</th>
+                                <th class="px-6 py-4 font-semibold w-1/6">Penalty</th>
+                                <th class="px-6 py-4 font-semibold w-2/5">Reasoning</th>
+                                <th class="px-6 py-4 font-semibold text-right w-auto">Source</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deductions-table-body" class="divide-y divide-gray-100">
+                            <!-- Deductions injected here by app.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Connect the JavaScript logic -->
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -14,7 +14,7 @@ class Settings(BaseSettings):
 
     # --- LLM Provider Config ---
     # Without a default value, Pydantic will throw an error on startup if this is missing
-    OPENAI_API_KEY: str
+    GOOGLE_API_KEY: str
 
     # --- Tooling API Keys ---
     TAVILY_API_KEY: str

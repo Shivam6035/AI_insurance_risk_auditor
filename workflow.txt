@@ -13,3 +13,9 @@ by visiting http://localhost:8000/docs to use the Swagger UI.
 
 [pytest -v] -- The -v (verbose) flag will show you exactly which tests passed or failed. 
                Because we mocked the external API calls, the entire test suite will execute in milliseconds.
+
+
+
+to be added in requirements 
+ -- pip install langchain-community
+ -- pip install pydantic-settings
