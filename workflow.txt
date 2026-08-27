@@ -19,3 +19,25 @@ by visiting http://localhost:8000/docs to use the Swagger UI.
 to be added in requirements 
  -- pip install langchain-community
  -- pip install pydantic-settings
+ -- pip install langchain-google-genai
+
+step 1 -- testing config and environment loading(done)
+       -- python -c "from app.core.config import settings; print('Config loaded successfully:', settings.PROJECT_NAME)"
+
+step 2 -- testing  web agent/tools (done)
+       --  python -c "from app.agent.tools import search_policy_guidelines; print(search_policy_guidelines.invoke({'query': 'HDFC ERGO Optima Secure policy wordings room rent limit'}))"
+
+step 3 -- Test the LangGraph Agent End-to-End(done) change open ai to gemini model 
+       -- python -c "import asyncio; from langchain_core.messages import HumanMessage; from app.agent.graph import auditor_agent; result = asyncio.run(auditor_agent.ainvoke({'messages': [HumanMessage(content='Audit my HDFC ERGO Optima Secure policy with 10L cover.')]})); print(result['messages'][-1].content)"
+
+
+step 4 -- Run automated unit and integration tests(done)
+       -- python -m pytest -v
+
+
+step 5 -- launch and test fastapi server 
+      -- uvicorn app.main:app --reload --port 8000 ( localhost)
+
+
+step 6  -- test docker
+        -- docker-compose up --build
