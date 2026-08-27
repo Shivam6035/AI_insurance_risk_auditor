@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: insurance_auditor_api
+    ports:
+      - "8000:8000"
+    # Mount the local app folder so code changes sync instantly
+    volumes:
+      - ./app:/app/app
+    # Load the environment variables from the .env file in the root
+    env_file:
+      - .env
+    # Override the Dockerfile CMD to enable hot-reloading for development
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped

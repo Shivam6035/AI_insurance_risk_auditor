@@ -1,0 +1,74 @@
+
+# ==========================================
+# Environments & Secrets (CRITICAL)
+# ==========================================
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+env/
+ENV/
+
+# ==========================================
+# Python Byte-compiled / Optimized files
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ==========================================
+# Testing & Coverage
+# ==========================================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.tox/
+.nox/
+
+# ==========================================
+# Distribution / Packaging
+# ==========================================
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ==========================================
+# IDEs and Editors
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==========================================
+# OS Generated Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ==========================================
+# Logs and Databases
+# ==========================================
+*.log
+*.sqlite3

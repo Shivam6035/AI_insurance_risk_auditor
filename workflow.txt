@@ -1,0 +1,15 @@
+
+
+Ensure your .env file is populated with your API keys.
+
+Open your terminal in the project root (where the docker-compose.yml is located) and run:
+
+
+[docker-compose up --build]
+The API will boot up. You can test it by sending a POST request to http://localhost:8000/api/v1/audit or 
+by visiting http://localhost:8000/docs to use the Swagger UI.
+
+
+
+[pytest -v] -- The -v (verbose) flag will show you exactly which tests passed or failed. 
+               Because we mocked the external API calls, the entire test suite will execute in milliseconds.
