@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policy Battle: AI Comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for Infographics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- html2pdf for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/compare.css">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased min-h-screen">
+
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <a href="/" class="text-indigo-600 hover:underline font-semibold mb-6 inline-block no-print">
+            &larr; Back to Single Policy Audit
+        </a>
+
+        <!-- Input Section -->
+        <section id="input-section" class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Compare Insurance Policies</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <label class="block text-sm font-semibold text-blue-700 mb-2">Policy A (Blue)</label>
+                    <input type="text" id="policy-a" class="w-full p-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g., HDFC ERGO Optima Secure">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-red-700 mb-2">Policy B (Red)</label>
+                    <input type="text" id="policy-b" class="w-full p-3 border border-red-200 rounded-lg focus:ring-2 focus:ring-red-500 outline-none" placeholder="e.g., Care Supreme">
+                </div>
+            </div>
+            <button id="compare-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-colors shadow-md">
+                Run AI Comparison
+            </button>
+            <p id="error-message" class="text-red-500 text-sm mt-4 text-center hidden font-medium"></p>
+        </section>
+
+        <!-- Loading State -->
+        <section id="loading-section" class="hidden text-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+            <p class="text-gray-500 font-medium animate-pulse">Agents are scraping and evaluating both policies concurrently...</p>
+        </section>
+
+        <!-- Exportable Results Dashboard -->
+        <section id="results-section" class="hidden bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+            <!-- Action Buttons (Hidden during print) -->
+            <div class="flex justify-end gap-3 mb-6 no-print">
+                <button id="export-pdf-btn" class="bg-gray-900 hover:bg-gray-800 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center gap-2">
+                    Download Infographic PDF
+                </button>
+            </div>
+
+            <!-- Page 1 of PDF: Infographic & Summary -->
+            <div class="pdf-page">
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-extrabold text-gray-900 mb-2">Policy Comparison Report</h1>
+                    <p class="text-xl text-gray-500">
+                        <span id="res-name-a" class="text-blue-600 font-bold">Policy A</span> 
+                        <span class="text-gray-400 mx-2">vs</span> 
+                        <span id="res-name-b" class="text-red-500 font-bold">Policy B</span>
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 border-l-4 border-indigo-600 p-6 rounded-r-lg mb-8">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Executive Verdict</h3>
+                    <p class="text-xl text-gray-800 font-medium"><span id="res-winner" class="font-bold text-green-600"></span> is the recommended choice.</p>
+                    <p id="res-summary" class="text-gray-600 mt-2"></p>
+                </div>
+
+                <!-- Radar Chart Container -->
+                <div class="w-full max-w-2xl mx-auto h-[400px] mb-8">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Page 2 of PDF: Detailed Breakdown -->
+            <div class="pdf-page break-before">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6 border-b pb-2">Clause-by-Clause Analysis</h3>
+                <div id="detailed-analysis-grid" class="grid grid-cols-1 gap-4">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/charts.js"></script>
+    <script src="/js/compare_app.js"></script>
+</body>
+</html>

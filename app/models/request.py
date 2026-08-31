@@ -16,3 +16,19 @@ class AuditRequest(BaseModel):
         description="The user's policy inquiry or audit request.",
         json_schema_extra={"example": "Audit my HDFC ERGO Optima Secure policy with 10L cover."}
     )
+
+class CompareRequest(BaseModel):
+    policy_a: str
+    policy_b: str
+
+class CompareRequest(BaseModel):
+    policy_a: str = Field(
+        ..., 
+        description="The first policy to compare.",
+        json_schema_extra={"example": "HDFC ERGO Optima Secure"}
+    )
+    policy_b: str = Field(
+        ..., 
+        description="The second policy to compare.",
+        json_schema_extra={"example": "Care Supreme"}
+    )

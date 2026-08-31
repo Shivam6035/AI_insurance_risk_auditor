@@ -8,6 +8,7 @@ from langchain_core.tools import tool
 # Import the new class name from the new package
 from langchain_tavily import TavilySearch
 
+
 # 2. Initialize the updated Tavily tool
 tavily_search = TavilySearch(
     max_results=3,

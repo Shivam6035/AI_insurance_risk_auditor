@@ -1,47 +1,7 @@
-# import json
-# from fastapi import APIRouter, HTTPException, status
-# from langchain_core.messages import HumanMessage
+from app.models.request import AuditRequest, CompareRequest
+from app.models.response import AuditResponse, CompareResponse
+from app.agent.graph import auditor_agent, compare_graph
 
-# from app.models.request import AuditRequest
-# from app.models.response import AuditResponse
-# from app.agent.graph import auditor_agent
-
-# # Note: Do not put a prefix here.
-# router = APIRouter(tags=["Auditor"])
-
-# @router.post(
-#     "/audit",
-#     response_model=AuditResponse,
-#     status_code=status.HTTP_200_OK,
-#     summary="Audit an insurance policy"
-# )
-# async def audit_policy(request: AuditRequest):
-#     try:
-#         final_state = await auditor_agent.ainvoke(
-#             {"messages": [HumanMessage(content=request.user_query)]}
-#         )
-
-#         last_message = final_state["messages"][-1]
-#         raw_content = last_message.content
-
-#         if "```json" in raw_content:
-#             raw_content = raw_content.split("```json")[1].split("```")[0].strip()
-#         elif "```" in raw_content:
-#             raw_content = raw_content.split("```")[1].split("```")[0].strip()
-
-#         data = json.loads(raw_content)
-#         return AuditResponse(**data)
-
-#     except json.JSONDecodeError as err:
-#         raise HTTPException(
-#             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-#             detail=f"Agent failed to return valid structured JSON: {str(err)}"
-#         )
-#     except Exception as err:
-#         raise HTTPException(
-#             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-#             detail=f"Audit execution error: {str(err)}"
-#         )
 
 import json
 from fastapi import APIRouter, HTTPException, status
@@ -100,4 +60,45 @@ async def audit_policy(request: AuditRequest):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Audit execution error: {str(err)}"
+        )
+
+
+@router.post(
+    "/compare",
+    response_model=CompareResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Compare two insurance policies"
+)
+async def compare_policies(request: CompareRequest):
+    try:
+        result = await compare_graph.ainvoke({
+            "policy_a_query": request.policy_a,
+            "policy_b_query": request.policy_b
+        })
+        data = json.loads(result["final_result"])
+        return CompareResponse(**data)
+    except Exception as err:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Comparison execution error: {str(err)}"
+        )
+
+@router.post(
+    "/compare",
+    response_model=CompareResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Compare two insurance policies side-by-side"
+)
+async def compare_policies(request: CompareRequest):
+    try:
+        result = await compare_graph.ainvoke({
+            "policy_a_query": request.policy_a,
+            "policy_b_query": request.policy_b
+        })
+        data = json.loads(result["final_result"])
+        return CompareResponse(**data)
+    except Exception as err:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Comparison execution error: {str(err)}"
         )

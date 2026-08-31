@@ -1,0 +1,19 @@
+/* Forces PDF pagination */
+.break-before {
+    page-break-before: always;
+}
+
+/* Clean up the DOM when exporting to PDF or Printing */
+@media print {
+    body {
+        background-color: white !important;
+    }
+    .no-print, #input-section {
+        display: none !important;
+    }
+    #results-section {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+}

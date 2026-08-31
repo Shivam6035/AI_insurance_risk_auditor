@@ -63,3 +63,18 @@ Once you have executed your searches and gathered all necessary facts, you MUST 
   ],
   "verdict": "A brief, 2-sentence summary of the policy's strengths and weaknesses."
 } """
+
+
+
+COMPARE_SYSTEM_PROMPT = """
+You are an expert actuary comparing two health insurance policies. 
+Evaluate both policies across exactly these 5 dimensions:
+1. Room Rent
+2. PED Wait Time
+3. Co-Pay
+4. No Claim Bonus
+5. Daycare Limits
+
+Assign a score from 0 to 100 for each policy on each dimension (100 means no restrictions/best coverage). 
+Output ONLY raw JSON conforming to the requested schema. Do not include markdown blocks.
+"""
