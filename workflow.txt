@@ -41,3 +41,5 @@ step 5 -- launch and test fastapi server
 
 step 6  -- test docker
         -- docker-compose up --build
+        -- docker ps  -- to check for the active containers
+        -- docker compose logs -f   --check for logs

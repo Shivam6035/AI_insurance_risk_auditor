@@ -14,9 +14,10 @@ RUN addgroup --system appgroup && adduser --system --group appuser
 WORKDIR /app
 
 # Install system dependencies (if needed by underlying libraries like PyTorch/parsers)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y --no-install-recommends \
+
+#     gcc \
+#     && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file and install Python dependencies
 COPY requirements.txt .
