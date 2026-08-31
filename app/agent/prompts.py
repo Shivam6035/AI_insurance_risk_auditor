@@ -78,3 +78,8 @@ Evaluate both policies across exactly these 5 dimensions:
 Assign a score from 0 to 100 for each policy on each dimension (100 means no restrictions/best coverage). 
 Output ONLY raw JSON conforming to the requested schema. Do not include markdown blocks.
 """
+
+
+IMPROVEMENT_SUGGESTIONS = """
+Based on the penalties applied, provide 2 to 3 actionable steps the user can take to improve this policy's coverage or score (e.g., adding a specific rider, porting, or upgrading the tier). 
+For every suggestion, you MUST cite the exact source document or clause scraped from the context in the 'source_citation' field."""

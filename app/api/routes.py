@@ -61,6 +61,14 @@ async def audit_policy(request: AuditRequest):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Audit execution error: {str(err)}"
         )
+    except Exception as err:
+            import traceback
+            traceback.print_exc() # <--- This prints the exact line that crashed
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Audit execution error: {str(err)}"
+            )
+    
 
 
 @router.post(

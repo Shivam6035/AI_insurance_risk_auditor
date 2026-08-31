@@ -112,6 +112,40 @@ document.addEventListener('DOMContentLoaded', () => {
             deductions.forEach(item => {
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-gray-50 transition-colors";
+
+
+                // --- NEW: Populate Improvement Suggestions ---
+        const suggestionsList = document.getElementById('suggestions-list');
+        suggestionsList.innerHTML = ''; // Clear previous results
+
+        if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
+            data.improvement_suggestions.forEach(suggestion => {
+                const li = document.createElement('li');
+                li.className = 'flex items-start gap-3 bg-white p-4 rounded-lg border border-emerald-50 shadow-sm';
+                li.innerHTML = `
+                    <div class="mt-1 flex-shrink-0">
+                        <!-- Green checkmark icon -->
+                        <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-gray-800 font-semibold leading-snug">${suggestion.recommendation}</p>
+                        <p class="text-xs text-gray-500 mt-1.5 font-medium">
+                            <span class="uppercase tracking-wider text-emerald-600 font-bold mr-1">Source:</span> 
+                            ${suggestion.source_citation}
+                        </p>
+                    </div>
+                `;
+                suggestionsList.appendChild(li);
+            });
+        } else {
+            suggestionsList.innerHTML = `
+                <li class="text-gray-500 italic p-4 text-center">
+                    No specific improvements identified. Your policy coverage is well-optimized!
+                </li>
+            `;
+        }
                 
                 // Handle missing URLs gracefully
                 const sourceHtml = (item.source_url && item.source_url.startsWith('http'))
