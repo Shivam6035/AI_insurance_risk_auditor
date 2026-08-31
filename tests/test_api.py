@@ -70,4 +70,5 @@ def test_audit_endpoint_handles_bad_json(mock_ainvoke):
     
     # The route should catch the JSONDecodeError and raise an HTTPException (500)
     assert response.status_code == 500
-    assert "valid JSON" in response.json()["detail"]
+    assert "valid structured JSON" in response.json()["detail"]
+    

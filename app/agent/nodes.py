@@ -97,7 +97,7 @@ from app.agent.prompts import SYSTEM_PROMPT
 
 # Initialize Google Gemini 1.5 Flash
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash-lite",
+    model="gemini-3.5-flash-lite",
     temperature=0,
     google_api_key=settings.GOOGLE_API_KEY
 )
