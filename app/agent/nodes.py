@@ -3,7 +3,7 @@ import re
 
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
-
+from app.models.response import AuditResponse
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, ToolMessage
