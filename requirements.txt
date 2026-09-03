@@ -33,10 +33,28 @@
 # langgraph==0.1.1
 # python-dotenv==1.0.1
 
+# fastapi
+# uvicorn
+# pydantic
+# langchain-google-genai
+# langchain-tavily
+# langgraph
+# python-dotenv
+
+# updated requirements.txt for railway deployment
+
+# Web framework
 fastapi
 uvicorn
+python-multipart
+
+# Configuration / validation
 pydantic
+pydantic-settings
+python-dotenv
+
+# LangChain / LangGraph
+langchain-core
 langchain-google-genai
 langchain-tavily
 langgraph
-python-dotenv
