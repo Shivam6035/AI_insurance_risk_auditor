@@ -51,7 +51,6 @@ auditor_agent = workflow.compile()
 
 import asyncio
 from typing import TypedDict
-from langchain_community.tools.tavily_search import TavilySearchResults
 from app.agent.prompts import COMPARE_SYSTEM_PROMPT
 from app.models.response import CompareResponse
 from app.agent.nodes import llm # Reusing your existing LLM instance
