@@ -34,8 +34,8 @@ RUN chown -R appuser:appgroup /app
 USER appuser
 
 # Expose the port the FastAPI server will run on
-EXPOSE 8000
+EXPOSE 8080
 
 # Start the FastAPI server using Uvicorn
 
-CMD ["sh", "-c", "exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]
