@@ -56,40 +56,38 @@ Instead of relying on a single LLM prompt, the system uses an **agentic workflow
 The platform can also support **policy-to-policy comparison**, helping users identify differences in coverage, exclusions, benefits, and risk exposure.
 
 ---
-
-# 🧠 System Architecture
-
-```mermaid
-flowchart TD
-
-    A[User / Insurance Analyst] --> B[Web Frontend]
-
-    B --> C[FastAPI REST API]
-
-    C --> D[Input Validation<br/>Pydantic Models]
-
-    D --> E[LangGraph Agent Workflow]
-
-    E --> F[Google Gemini LLM]
-
-    F --> G{External Information Required?}
-
-    G -- Yes --> H[Tavily Search Tool]
-
-    H --> I[Policy / Guideline Search]
-
-    I --> F
-
-    G -- No --> J[Structured Risk Analysis]
-
-    F --> J
-
-    J --> K[Pydantic AuditResponse Validation]
-
-    K --> L[Risk Findings / Recommendations]
-
-    L --> B
-```
+# System Architecture
+┌────────────────────────────────────────────────────────┐
+       │             User Interface (HTML5 / Vanilla JS)        │
+       │         Single Audit Form  │  Dual-Policy Comparator   │
+       └────────────────────────────┬───────────────────────────┘
+                                    │ HTTP POST (JSON)
+                                    ▼
+       ┌────────────────────────────────────────────────────────┐
+       │               FastAPI Monolithic Backend               │
+       │     Route Validation (Pydantic)  │  Static Asset Mount │
+       └────────────────────────────┬───────────────────────────┘
+                                    │
+                                    ▼
+       ┌────────────────────────────────────────────────────────┐
+       │             LangGraph Orchestration Engine             │
+       │                                                        │
+       │    ┌──────────────────┐         ┌─────────────────┐    │
+       │    │  Reasoning Node  │ ◄─────► │   Action Node   │    │
+       │    │  (Gemini 1.5)    │         │  (Tavily Tool)  │    │
+       │    └────────┬─────────┘         └─────────────────┘    │
+       │             │                                          │
+       │             ▼                                          │
+       │    ┌──────────────────────────────────────────────┐    │
+       │    │   Deterministic JSON / AuditResponse Schema   │    │
+       │    └──────────────────────────────────────────────┘    │
+       └────────────────────────────┬───────────────────────────┘
+                                    │
+                                    ▼
+       ┌────────────────────────────────────────────────────────┐
+       │                  Interactive Results                   │
+       │  Radar Chart (Chart.js) │ Infographic PDF (html2pdf)   │
+       └────────────────────────────────────────────────────────┘
 
 ---
 
