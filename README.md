@@ -57,39 +57,8 @@ The platform can also support **policy-to-policy comparison**, helping users ide
 
 ---
 # System Architecture
-┌────────────────────────────────────────────────────────┐
-       │             User Interface (HTML5 / Vanilla JS)        │
-       │         Single Audit Form  │  Dual-Policy Comparator   │
-       └────────────────────────────┬───────────────────────────┘
-                                    │ HTTP POST (JSON)
-                                    ▼
-       ┌────────────────────────────────────────────────────────┐
-       │               FastAPI Monolithic Backend               │
-       │     Route Validation (Pydantic)  │  Static Asset Mount │
-       └────────────────────────────┬───────────────────────────┘
-                                    │
-                                    ▼
-       ┌────────────────────────────────────────────────────────┐
-       │             LangGraph Orchestration Engine             │
-       │                                                        │
-       │    ┌──────────────────┐         ┌─────────────────┐    │
-       │    │  Reasoning Node  │ ◄─────► │   Action Node   │    │
-       │    │  (Gemini 1.5)    │         │  (Tavily Tool)  │    │
-       │    └────────┬─────────┘         └─────────────────┘    │
-       │             │                                          │
-       │             ▼                                          │
-       │    ┌──────────────────────────────────────────────┐    │
-       │    │   Deterministic JSON / AuditResponse Schema   │    │
-       │    └──────────────────────────────────────────────┘    │
-       └────────────────────────────┬───────────────────────────┘
-                                    │
-                                    ▼
-       ┌────────────────────────────────────────────────────────┐
-       │                  Interactive Results                   │
-       │  Radar Chart (Chart.js) │ Infographic PDF (html2pdf)   │
-       └────────────────────────────────────────────────────────┘
+<img width="482" height="634" alt="image" src="https://github.com/user-attachments/assets/037be730-5f56-4096-81d1-bfb525b03c19" />
 
----
 
 # 🤖 Agentic Workflow
 
