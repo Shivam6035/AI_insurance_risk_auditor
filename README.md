@@ -5,6 +5,9 @@ An **AI-powered insurance policy auditing and comparison platform** that uses **
 The system combines **Google Gemini, LangGraph, Tavily Search, FastAPI, Pydantic, and Railway** to transform lengthy insurance policy text into structured and actionable risk insights.
 
 ---
+<img width="1536" height="736" alt="image" src="https://github.com/user-attachments/assets/feccc8e2-8f77-487f-96f5-6c83da8b4e6e" />
+<img width="1522" height="738" alt="image" src="https://github.com/user-attachments/assets/b5c958e3-73a6-4b0f-914d-1d5da946252b" />
+
 
 ## 🎯 Business Problem
 
@@ -57,7 +60,10 @@ The platform can also support **policy-to-policy comparison**, helping users ide
 
 ---
 # System Architecture
+<img width="1536" height="1024" alt="ChatGPT Image Sep 5, 2026, 04_02_51 PM" src="https://github.com/user-attachments/assets/1c3654d4-d8c7-4024-81f1-c9a8f8e9650b" />
+
 <img width="482" height="634" alt="image" src="https://github.com/user-attachments/assets/037be730-5f56-4096-81d1-bfb525b03c19" />
+
 
 
 # 🤖 Agentic Workflow
